@@ -1,118 +1,55 @@
+
+
 import 'package:flutter/material.dart';
 
-main() => runApp(App());
+void main() {
+  runApp(MyApp());
+}
 
-class App extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 60.0,
-          horizontal: 80.0,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Review Widget'),
         ),
-        color: Color(0xFFFFFFFF),
-        child: Content(),
+        body: ReviewWidget(),
       ),
     );
   }
 }
 
-class Content extends StatelessWidget {
+class ReviewWidget extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Counter('Warangkhana Srichan'),
-        Counter('6188096'),
-        Counter('TuesdayMenu'),
-        Counter('6188096,6488001,6488099,6488149')
-        
-      ],
-    );
-  }
+  _ReviewWidgetState createState() => _ReviewWidgetState();
 }
 
-class Counter extends StatefulWidget {
-  final String _name;
-  Counter(this._name);
-
-  @override
-  State<Counter> createState() => _CounterState();
-}
-
-class _CounterState extends State<Counter> {
-  int count = 0;
+class _ReviewWidgetState extends State<ReviewWidget> {
+  TextEditingController reviewController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10.0),
-      padding: EdgeInsets.all(4.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Color(0xFFFD6A02)),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // [widget] is the property of the State class that stores
-          // the instance of the [StatefulWidget] ([Counter] in our case)
-          _CounterLabel(widget._name),
-          _CounterButton(
-            count,
-            onPressed: () {
-              setState(() {
-                ++count;
-              });
-            },
+          Text('Write your review:',
+            style: TextStyle(fontSize: 18),
+          ),
+          SizedBox(height: 8),
+          TextFormField(
+            controller: reviewController,
+            maxLines: 5,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Type your review here...',
+            ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _CounterLabel extends StatelessWidget {
-  static const textStyle = TextStyle(
-    color: Color(0xFF000000),
-    fontSize: 26.0,
-  );
-
-  final String _label;
-  _CounterLabel(this._label);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _label,
-      style: _CounterLabel.textStyle,
-    );
-  }
-}
-
-class _CounterButton extends StatelessWidget {
-  final count;
-  final onPressed;
-  _CounterButton(this.count, {@required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 6.0),
-        decoration: BoxDecoration(
-          color: Color(0xFFFD6A02),
-          borderRadius: BorderRadius.circular(4.0),
-        ),
-        child: Center(
-          child: Text(
-            '$count',
-            style: TextStyle(fontSize: 20.0),
-          ),
-        ),
       ),
     );
   }
